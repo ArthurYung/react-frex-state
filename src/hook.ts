@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { FrexContext } from './context';
 
-export function createFrexHook<S extends FrexContext<any>>(context: S) {
+export function createFrexHook<S extends Object>(
+  context: FrexContext<S>,
+): () => [S, (state: Partial<S>) => void] {
   return () => {
     const [, forceUpdate] = useState(0);
     const frexStateRef = useRef<S>(context.getState());

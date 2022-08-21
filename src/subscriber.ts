@@ -1,4 +1,4 @@
-import { getNextId } from './nid';
+import { getUpdateId } from './updater';
 
 export interface FrexObserver<T> {
   (value: T, updateId: number): void;
@@ -35,7 +35,7 @@ export function createSubscriber<S extends Object>() {
   }
 
   function emit(state: S) {
-    const updateId = getNextId();
+    const updateId = getUpdateId();
     listeners.forEach((observer) => {
       try {
         observer(state, updateId);
