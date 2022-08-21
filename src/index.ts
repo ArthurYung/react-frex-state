@@ -1,14 +1,8 @@
 import { createFrexHook } from './hook';
-import { createFrexContext } from './context';
+import { ContextOptions, createFrexContext } from './context';
 
-export function createFrexState<S extends Object>({
-  initState,
-  keepAlive = true,
-}: {
-  initState?: S;
-  keepAlive?: boolean;
-}) {
-  const context = createFrexContext(initState, keepAlive);
+export function createFrexState<S extends Object>(options: ContextOptions<S>) {
+  const context = createFrexContext(options);
   const useFrexState = createFrexHook(context);
 
   return {

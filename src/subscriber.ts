@@ -4,7 +4,11 @@ export interface FrexObserver<T> {
   (value: T, updateId: number): void;
 }
 
-export function createSubscriber<S extends Object>() {
+export function createSubscriber<S extends Object>({
+  errorHandler,
+}: {
+  errorHandler?: (e: any) => void;
+}) {
   const listeners: FrexObserver<S>[] = [];
 
   function subscribe(observer: FrexObserver<S>) {
@@ -40,7 +44,7 @@ export function createSubscriber<S extends Object>() {
       try {
         observer(state, updateId);
       } catch (e) {
-        console.error('todo: error handler', e);
+        errorHandler ? errorHandler(e) : console.error('Emit observer error: ', e);
       }
     });
   }

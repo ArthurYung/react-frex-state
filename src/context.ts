@@ -5,11 +5,23 @@ export enum FrexUseType {
   VALUE,
 }
 
-export function createFrexContext<S extends Object>(initState = {} as S, keepAlive: boolean) {
+export interface ContextOptions<S extends Object> {
+  initState?: S;
+  keepAlive?: boolean;
+  errorHandler?: (e: any) => void;
+}
+
+export function createFrexContext<S extends Object>({
+  initState = {} as S,
+  keepAlive = true,
+  errorHandler,
+}: ContextOptions<S>) {
   const context = {
     value: initState,
     useType: FrexUseType.READY,
-    subscriber: createSubscriber<S>(),
+    subscriber: createSubscriber<S>({
+      errorHandler,
+    }),
   };
 
   function getState() {
