@@ -1,8 +1,8 @@
 {
-  "private": true,
   "name": "react-frex-state",
   "version": "1.0.0",
   "description": "A painless react state library",
+  "homepage": "https://github.com/ArthurYung/react-frex-state",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
