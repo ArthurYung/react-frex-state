@@ -2,7 +2,7 @@
 
 A painless react state library. [Document](https://arthuryung.github.io/react-frex-state/)
 
-[![codecov](https://codecov.io/gh/ArthurYung/react-frex-state/branch/master/graph/badge.svg?token=VYQG6SBSEZ)](https://codecov.io/gh/ArthurYung/react-frex-state) [![npm](https://img.shields.io/npm/v/react-frex-state)](https://www.npmjs.com/package/react-frex-state)
+[![codecov](https://codecov.io/gh/ArthurYung/react-frex-state/branch/master/graph/badge.svg?token=VYQG6SBSEZ)](https://codecov.io/gh/ArthurYung/react-frex-state) [![npm](https://img.shields.io/npm/v/react-frex-state)](https://www.npmjs.com/package/react-frex-state) [![listener](https://img.shields.io/github/license/ArthurYung/react-frex-state)](https://github.com/ArthurYung/react-frex-state/blob/master/LICENSE)
 
 ## Useage
 
