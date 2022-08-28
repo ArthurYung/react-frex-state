@@ -9,6 +9,19 @@ function createJestContext(options?: { keepAlive?: boolean; errorHandler?: (e: a
   });
 }
 
+function createJestModuleContext() {
+  return createFrexContext({
+    initState: {
+      count: 0,
+    },
+    moduleState: {
+      modulename: {
+        count: '0',
+      },
+    },
+  });
+}
+
 describe('create context instance', () => {
   it('get state', () => {
     const context = createJestContext();
@@ -82,5 +95,40 @@ describe('context options', () => {
       throw new Error('emit error handler');
     });
     context.setState({ count: 3 });
+  });
+});
+
+describe('create modules context instance', () => {
+  it('get module state', () => {
+    const context = createJestModuleContext();
+    expect(context.getModuleState('modulename')).toMatchObject({ count: '0' });
+  });
+
+  it('set module state', () => {
+    const context = createJestModuleContext();
+    context.setModuleState('modulename', { count: '1' });
+    expect(context.getModuleState('modulename')).toMatchObject({ count: '1' });
+  });
+
+  it('subscribe module', (done) => {
+    const context = createJestModuleContext();
+    // Emit observers whit setState;
+    context.subscribeModule(() => {
+      done();
+    }, 'modulename');
+
+    context.setModuleState('modulename', { count: '1' });
+  });
+
+  it('unSubscribe module', () => {
+    let hasEmitObserver = false;
+    const context = createJestModuleContext();
+    const observer = () => {
+      hasEmitObserver = true;
+    };
+    context.subscribeModule(observer, 'modulename');
+    context.unsubscribeModule(observer, 'modulename');
+    context.setModuleState('modulename', { count: '1' });
+    expect(hasEmitObserver).toBeFalsy();
   });
 });

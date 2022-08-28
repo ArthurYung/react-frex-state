@@ -122,3 +122,51 @@ describe('error handler', () => {
     });
   });
 });
+
+describe('module states', () => {
+  type ModuleState = {
+    moduleCount: {
+      count: string;
+    };
+  };
+
+  it('hasObserver', () => {
+    const subscriber = createSubscriber<Foo, ModuleState>({});
+    expect(subscriber.hasObserverModule('moduleCount')).toBeFalsy();
+    subscriber.subscribeModule(() => {}, 'moduleCount');
+    expect(subscriber.hasObserverModule('moduleCount')).toBeTruthy();
+  });
+
+  it('subscribe & unsubscribe', () => {
+    const subscriber = createSubscriber<Foo, ModuleState>({});
+    const observer = () => {};
+    subscriber.subscribeModule(observer, 'moduleCount');
+
+    expect(subscriber.hasObserverModule('moduleCount')).toBeTruthy();
+    subscriber.unsubscribeModule(observer, 'moduleCount');
+    expect(subscriber.hasObserverModule('moduleCount')).toBeFalsy();
+  });
+
+  it('clear', () => {
+    const subscriber = createSubscriber<Foo, ModuleState>({});
+    subscriber.subscribeModule(() => {}, 'moduleCount');
+    subscriber.subscribeModule(() => {}, 'moduleCount');
+    expect(subscriber.hasObserverModule('moduleCount')).toBeTruthy();
+
+    // Clear all observers
+    subscriber.clearModule('moduleCount');
+    expect(subscriber.hasObserverModule('moduleCount')).toBeFalsy();
+  });
+
+  it('emit state', () => {
+    let emitState: ModuleState['moduleCount'] | null = null;
+    const subscriber = createSubscriber<Foo, ModuleState>({});
+    const observer = (state: ModuleState['moduleCount']) => {
+      emitState = state;
+    };
+
+    subscriber.subscribeModule(observer, 'moduleCount');
+    subscriber.emitModule({ count: '3' }, 'moduleCount');
+    expect(emitState).toMatchObject({ count: '3' });
+  });
+});
