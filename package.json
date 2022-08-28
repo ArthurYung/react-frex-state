@@ -1,6 +1,6 @@
 {
   "name": "react-frex-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A painless react state library",
   "homepage": "https://github.com/ArthurYung/react-frex-state",
   "scripts": {
@@ -43,5 +43,6 @@
     "prettier": "^2.2.1",
     "react": "^18.2.0",
     "yorkie": "^2.0.0"
-  }
+  },
+  "license": "MIT"
 }
