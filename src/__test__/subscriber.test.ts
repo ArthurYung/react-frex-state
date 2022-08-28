@@ -7,14 +7,14 @@ type Foo = {
 
 describe('create subscriber instance', () => {
   it('hasObserver', () => {
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
     expect(subscriber.hasObserver()).toBeFalsy();
     subscriber.subscribe(() => {});
     expect(subscriber.hasObserver()).toBeTruthy();
   });
 
   it('subscribe & unsubscribe', () => {
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
     const observer = () => {};
     subscriber.subscribe(observer);
 
@@ -30,7 +30,7 @@ describe('create subscriber instance', () => {
   });
 
   it('clear', () => {
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
     subscriber.subscribe(() => {});
     subscriber.subscribe(() => {});
     expect(subscriber.hasObserver()).toBeTruthy();
@@ -42,7 +42,7 @@ describe('create subscriber instance', () => {
 
   it('emit state', () => {
     let emitState: Foo | null = null;
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
     const observer = (state: Foo) => {
       emitState = state;
     };
@@ -54,7 +54,7 @@ describe('create subscriber instance', () => {
 
   it('emit all & updateId', () => {
     const emitState = { count: 2 };
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
 
     // Subscribe two data check if they are equal
     let result1: Foo | null = null;
@@ -80,7 +80,7 @@ describe('create subscriber instance', () => {
   it('updateId changed', () => {
     let prevId = 0;
     let currId = prevId;
-    const subscriber = createSubscriber<Foo>({});
+    const subscriber = createSubscriber<Foo, {}>({});
     subscriber.subscribe((_, id) => {
       currId = id;
     });
@@ -101,7 +101,7 @@ describe('create subscriber instance', () => {
 
 describe('error handler', () => {
   function createErrorEmit(error: Error, errorHandler?: (e: any) => void) {
-    const subscriber = createSubscriber<Foo>({ errorHandler });
+    const subscriber = createSubscriber<Foo, {}>({ errorHandler });
     subscriber.subscribe(() => {
       throw error;
     });
